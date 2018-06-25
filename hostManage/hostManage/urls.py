@@ -22,4 +22,5 @@ urlpatterns = [
     # url(r'^create$',views.createhost),
     url(r'^login.html$',views.login),
     url(r'^home.html$',views.home),
+    url(r'^form_component.html$',views.form_component),
 ]

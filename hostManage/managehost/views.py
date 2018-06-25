@@ -66,3 +66,6 @@ def home(request):
     if request.session.get('msg'):
         return render(request,'home.html')
     return redirect('/login.html')
+
+def form_component(request):
+    return render(request,'form_component.html')
