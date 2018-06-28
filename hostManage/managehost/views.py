@@ -69,3 +69,8 @@ def home(request):
 
 def form_component(request):
     return render(request,'form_component.html')
+
+def logout(request):
+    request.session.clear()
+
+    return redirect('/login.html')
