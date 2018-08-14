@@ -76,4 +76,45 @@ class Server(models.Model):
 
 
 
+class SecurityDevice(models.Model):
+    asset = models.OneToOneField('Asset')
+    sub_assset_type_choices = (
+        (0,'防火墙'),
+        (1, '入侵检测设备'),
+        (2, '互联网网关'),
+        (4, '运维审计系统'),
+    )
+    sub_asset_type = models.SmallIntegerField(choices=sub_assset_type_choices, verbose_name="服务器类型", default=0)
+    def __str__(self):
+        return self.asset.id
 
+class NetworkDevice(models.Model):
+    asset = models.OneToOneField('Asset')
+    sub_assset_type_choices = (
+        (0, '路由器'),
+        (1, '交换机'),
+        (2, '负载均衡'),
+        (4, 'VPN设备'),
+    )
+    sub_asset_type = models.SmallIntegerField(choices=sub_assset_type_choices, verbose_name="服务器类型", default=0)
+
+    vlan_ip = models.GenericIPAddressField(u'VlanIP', blank=True, null=True)
+    intranet_ip = models.GenericIPAddressField(u'内网IP', blank=True, null=True)
+    model = models.CharField(u'型号', max_length=128, null=True, blank=True)
+    firmware = models.ForeignKey('Software', blank=True, null=True)
+    port_num = models.SmallIntegerField(u'端口个数', null=True, blank=True)
+    device_detail = models.TextField(u'设备详细配置', null=True, blank=True)
+    class Meta:
+        verbose_name = '网络设备'
+        verbose_name_plural = "网络设备"
+
+
+class Software(models.Model):
+    asset = models.OneToOneField('Asset')
+    sub_assset_type_choices = (
+        (0, 'OS'),
+        (1, '办公\开发软件'),
+        (2, '业务软件'),
+    )
+    sub_asset_type = models.SmallIntegerField(choices=sub_assset_type_choices, verbose_name="服务器类型", default=0)
+    license_num = models.IntegerField(verbose_name="授权数")
